@@ -2,7 +2,7 @@ name: Deploy to Cloudflare Pages
 
 on:
   push:
-    branches: [main] # Pastikan nama branch kamu memang 'main'
+    branches: [main]
 
 jobs:
   deploy:
@@ -16,5 +16,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: jepretrent # Ganti dengan nama project di Cloudflare kamu
+          projectName: jepretrent 
+          # PENTING: Titik (.) berarti upload folder saat ini di mana index.html berada
           directory: .
