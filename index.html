@@ -133,14 +133,15 @@
   >
     <!-- Header Start -->
     <header
-      class="sticky top-0 z-[60] bg-white/95 backdrop-blur-xl border-b border-gray-100"
+      class="sticky top-0 z-[100] bg-white/95 backdrop-blur-xl border-b border-gray-100"
     >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-20 items-center">
-          <div class="flex-1">
+        <div class="flex justify-between h-16 md:h-20 items-center">
+          <div class="flex-1 flex items-center">
             <button
               @click="mobileMenu = !mobileMenu"
-              class="relative w-12 h-12 flex flex-col items-center justify-center bg-slate-50 rounded-2xl hover:bg-slate-100 transition-all group"
+              class="relative w-10 h-10 md:w-12 md:h-12 flex flex-col items-center justify-center bg-slate-50 rounded-xl md:rounded-2xl hover:bg-slate-100 transition-all group"
+              aria-label="Toggle Menu"
             >
               <div class="relative w-6 h-5">
                 <span
@@ -166,19 +167,28 @@
               class="flex items-center gap-2 group"
             >
               <div
-                class="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20 group-hover:scale-105 transition-transform"
+                class="w-8 h-8 md:w-10 md:h-10 bg-orange-500 rounded-lg md:rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20 group-hover:scale-105 transition-transform"
               >
-                <span class="text-white font-black text-2xl italic">J</span>
+                <span class="text-white font-black text-xl md:text-2xl italic"
+                  >J</span
+                >
               </div>
               <span
-                class="text-2xl font-black tracking-tighter text-slate-900 italic"
-                >Jepret<span class="text-orange-500 font-medium"
-                  >Rent.</span
-                ></span
+                class="text-xl md:text-2xl font-black tracking-tighter text-slate-900 italic"
               >
+                Jepret<span class="text-orange-500 font-medium">Rent.</span>
+              </span>
             </a>
           </div>
-          <div class="flex-1 hidden md:block"></div>
+
+          <div class="flex-1 flex justify-end">
+            <a
+              href="https://wa.me/628123456789"
+              class="hidden md:flex items-center gap-2 bg-orange-500 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-orange-600 transition-all shadow-md shadow-orange-200"
+            >
+              SEWA SEKARANG
+            </a>
+          </div>
         </div>
       </div>
 
@@ -189,85 +199,82 @@
         x-transition:enter-start="opacity-0 -translate-y-4"
         x-transition:enter-end="opacity-100 translate-y-0"
         x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 translate-y-0"
+        x-transition:leave-end="opacity-0 -translate-y-4"
         @click.away="mobileMenu = false"
-        class="absolute top-full left-0 w-full bg-white border-b border-gray-100 shadow-2xl"
+        class="absolute top-full left-0 w-full bg-white border-b border-gray-100 shadow-2xl max-h-[90vh] overflow-y-auto"
       >
         <div class="max-w-7xl mx-auto border-x border-gray-50">
           <div class="grid grid-cols-1 md:grid-cols-3">
-            <div class="p-8 border-b md:border-b-0 md:border-r border-gray-100">
+            <div
+              class="p-6 md:p-8 border-b md:border-b-0 md:border-r border-gray-100"
+            >
               <p
-                class="text-[10px] font-black text-orange-500 tracking-[0.3em] uppercase mb-8"
+                class="text-[10px] font-black text-orange-500 tracking-[0.3em] uppercase mb-6 md:mb-8"
               >
                 Utama
               </p>
-              <div class="flex flex-col gap-5">
-                <a
-                  href="#home"
-                  @click.prevent="scrollToSection('#home')"
-                  class="text-2xl font-bold text-slate-900 hover:text-orange-500 transition-colors"
-                  >Beranda</a
+              <div class="flex flex-col gap-4 md:gap-5">
+                <template
+                  x-for="item in ['Beranda', 'Layanan', 'Katalog Unit']"
+                  :key="item"
                 >
-                <a
-                  href="#layanan"
-                  @click.prevent="scrollToSection('#layanan')"
-                  class="text-2xl font-bold text-slate-900 hover:text-orange-500 transition-colors"
-                  >Layanan</a
-                >
-                <a
-                  href="#katalog"
-                  @click.prevent="scrollToSection('#katalog')"
-                  class="text-2xl font-bold text-slate-900 hover:text-orange-500 transition-colors"
-                  >Katalog Unit</a
-                >
+                  <a
+                    :href="'#' + item.toLowerCase().replace(' ', '')"
+                    @click="mobileMenu = false; scrollToSection('#' + item.toLowerCase().replace(' ', ''))"
+                    class="text-xl md:text-2xl font-bold text-slate-900 hover:text-orange-500 transition-colors"
+                    x-text="item"
+                  ></a>
+                </template>
               </div>
             </div>
 
             <div
-              class="p-8 border-b md:border-b-0 md:border-r border-gray-100 bg-slate-50/50"
+              class="p-6 md:p-8 border-b md:border-b-0 md:border-r border-gray-100 bg-slate-50/50"
             >
               <p
-                class="text-[10px] font-black text-slate-400 tracking-[0.3em] uppercase mb-8"
+                class="text-[10px] font-black text-slate-400 tracking-[0.3em] uppercase mb-6 md:mb-8"
               >
                 Prosedur & Bantuan
               </p>
-              <div class="flex flex-col gap-4">
+              <div class="grid grid-cols-2 md:grid-cols-1 gap-4">
                 <a
                   href="#prosedur"
-                  @click.prevent="scrollToSection('#prosedur')"
+                  @click="mobileMenu = false"
                   class="font-bold text-slate-700 hover:text-orange-500 transition"
                   >Prosedur Sewa</a
                 >
                 <a
                   href="#faq"
-                  @click.prevent="scrollToSection('#faq')"
+                  @click="mobileMenu = false"
                   class="font-bold text-slate-700 hover:text-orange-500 transition"
                   >Tanya Jawab (FAQ)</a
                 >
                 <a
                   href="#testimoni"
-                  @click.prevent="scrollToSection('#testimoni')"
+                  @click="mobileMenu = false"
                   class="font-bold text-slate-700 hover:text-orange-500 transition"
                   >Testimoni</a
                 >
                 <a
                   href="#kalkulator"
-                  @click.prevent="scrollToSection('#kalkulator')"
+                  @click="mobileMenu = false"
                   class="font-bold text-slate-700 hover:text-orange-500 transition"
                   >Kalkulator Harga</a
                 >
               </div>
             </div>
 
-            <div class="p-8">
-              <p
-                class="text-[10px] font-black text-slate-400 tracking-[0.3em] uppercase mb-8"
-              >
-                Hubungi Kami
-              </p>
-              <div class="space-y-6">
+            <div class="p-6 md:p-8 flex flex-col justify-between bg-white">
+              <div>
+                <p
+                  class="text-[10px] font-black text-slate-400 tracking-[0.3em] uppercase mb-6 md:mb-8"
+                >
+                  Hubungi Kami
+                </p>
                 <a
                   href="https://wa.me/628123456789"
-                  class="flex items-center justify-center gap-3 w-full bg-slate-900 text-white p-4 rounded-xl font-black text-sm hover:bg-orange-500 transition-all"
+                  class="flex items-center justify-center gap-3 w-full bg-slate-900 text-white p-4 rounded-xl font-black text-sm hover:bg-orange-500 transition-all shadow-lg hover:shadow-orange-200"
                 >
                   <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
                     <path
@@ -276,21 +283,26 @@
                   </svg>
                   WHATSAPP KAMI
                 </a>
-                <div class="flex gap-4 justify-center md:justify-start">
-                  <a
-                    href="#kontak"
-                    @click.prevent="scrollToSection('#kontak')"
-                    class="text-xs font-bold text-slate-400 hover:text-slate-900 transition"
-                    >LOKASI</a
-                  >
-                  <span class="text-gray-200">|</span>
-                  <a
-                    href="#galeri"
-                    @click.prevent="scrollToSection('#galeri')"
-                    class="text-xs font-bold text-slate-400 hover:text-slate-900 transition"
-                    >GALERI</a
-                  >
-                </div>
+              </div>
+
+              <div class="flex gap-4 justify-center md:justify-start mt-8">
+                <a
+                  href="#kontak"
+                  class="text-[10px] font-bold text-slate-400 hover:text-slate-900 transition"
+                  >LOKASI</a
+                >
+                <span class="text-gray-200">|</span>
+                <a
+                  href="#galeri"
+                  class="text-[10px] font-bold text-slate-400 hover:text-slate-900 transition"
+                  >GALERI</a
+                >
+                <span class="text-gray-200">|</span>
+                <a
+                  href="#syarat"
+                  class="text-[10px] font-bold text-slate-400 hover:text-slate-900 transition"
+                  >S&K</a
+                >
               </div>
             </div>
           </div>
