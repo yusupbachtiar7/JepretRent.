@@ -1,21 +1,14 @@
-name: Deploy to Cloudflare Pages
-
+name: Deploy to Pages
 on:
   push:
     branches: [main]
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Publish to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: jepretrent 
-          # PENTING: Titik (.) berarti upload folder saat ini di mana index.html berada
-          directory: .
+      - uses: actions/checkout@v4
+      - name: Deploy
+        run: npx wrangler pages deploy . --project-name=jepretrent
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
